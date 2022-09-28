@@ -35,4 +35,16 @@ PKEYFIN=$(cat ./$KEYNAME-pub)
 PKEYFIN=${PKEYFIN// /l0l1m50rand0m}
 echo "$PKEYFIN" > ./$KEYNAME-pub
 rm -rf ./keybase
+echo "$(tput setaf 3)-------------$(tput sgr 0)"
+echo "$(tput setaf 3) private key $(tput sgr 0)"
+echo "$(tput setaf 3)-------------$(tput sgr 0)"
+echo " "
+cat ./$KEYNAME
+echo " "
+echo "$(tput setaf 3)------------$(tput sgr 0)"
+echo "$(tput setaf 3) public key $(tput sgr 0)"
+echo "$(tput setaf 3)------------$(tput sgr 0)"
+echo " "
+cat ./$KEYNAME-pub
+echo " "
 echo "Generated $KEYNAME and $KEYNAME-pub"
