@@ -2,6 +2,9 @@
 
 zmodload zsh/net/tcp
 AUTHORIZED="0"
+# In case anyone ends up playing with this before I have a chance to put more work into this
+# You have to put your pubkey in here as well at the moment, as comparison against privatekey hasnt been implemented yet
+# If you search the string 'insert-key-here' youll find it
 main() {
   ztcp -l 333
   fd=$REPLY
