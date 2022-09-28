@@ -44,6 +44,14 @@ while [ $LOOPY = 0 ]; do
       WRITE=${line//.PLACEYMCPLACEHOLD/'\n'}
       echo "$WRITE" > ./$SAVEDAT
       echo "Received data is stored at ./$SAVEDAT"
+      echo -n 'View now without closing connection? Know what youre opening or you could mess your term (Y/n) '
+      read VIEWER
+      if [ -z $VIEWER ]; then
+        VIEWER=y
+      fi
+      if [ $VIEWER = y ] || [ $VIEWER = Y ]; then
+        cat ./$SAVEDAT
+      fi
     fi
   else
     echo "$IPINFO" >& $hostfd
