@@ -26,7 +26,7 @@ KEYFIN=${KEYFIN// /$RANDOM}
 echo "$KEYFIN" > ./$KEYNAME
 MDP=$(md5sum ./$KEYNAME)
 MDP=${MDP:0:32}
-SHAP=$(sha1sum ./keybase)
+SHAP=$(sha1sum ./$KEYNAME)
 SHAP=${SHAP:0:40}
 SUMSP+=("$MDP" "$SHAP")
 SUMSP=${SUMSP[@]/ /l0l1m50rand0m}
