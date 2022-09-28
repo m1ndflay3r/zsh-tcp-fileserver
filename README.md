@@ -7,7 +7,7 @@ basic use:
 
   Firstly, until I can be fucked to make this portable, all directories are hardcoded to /root/testing/servroot so thats where server has to reside unless you feel like changing the hardlinks.
 
-  Run generatekeys.zsh to create a public / private keypair. 
+  Run generatekey.zsh to create a public / private keypair. 
 
   As you've likely guessed, the public key goes to the client and private the server. Make sure the private key isnt contained in servroot or clients will be able to download it. 
 
