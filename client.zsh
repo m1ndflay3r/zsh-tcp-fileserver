@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-AuthKey=$(cat /Path/To/Public/Key)
+AuthKey=$(cat ./Path/To/Pub/Key)
 
 TARGET="NULL"
 PORT="NULL"

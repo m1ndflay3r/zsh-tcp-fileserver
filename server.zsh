@@ -10,7 +10,7 @@ TEST1=$(md5sum $PrivateKey)
 TEST1=${TEST1:0:32}
 TEST2=$(sha1sum $PrivateKey)
 TEST2=${TEST2:0:40}
-ExpectPubKey=""$TEST1"l0l1m50rand0m"$TEST2""
+export ExpectPubKey=""$TEST1"l0l1m50rand0m"$TEST2""
 
 main() {
   ztcp -l 333
@@ -36,9 +36,16 @@ main() {
         echo "$(date +"%T")    client reported ip address $CLIENTIP" >> /root/testing/servroot/server.log
         echo "Checking authkey..." >& $clientfd
         read -t 600 line <& $clientfd
+          if [ -z "$line" ]; then
+            echo "$(date +"%T")    client sent a nullkey" >> /root/testing/servroot/server.log
+            line="NULLKEY"
+          fi
         if [[ "$line" = "$ExpectPubKey" ]]; then
           SHPASS=1
           MDPASS=1
+        else
+          SHPASS=0
+          MDPASS=0
         fi
         if [ $SHPASS = 0 ] || [ $MDPASS = 0 ]; then
           echo "$(tput setaf 1) identity key verification failure $(tput sgr 0)" >& $clientfd
