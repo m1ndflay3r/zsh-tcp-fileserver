@@ -1,10 +1,20 @@
 #!/usr/bin/env zsh
 
 zmodload zsh/net/tcp
+
 AUTHORIZED="0"
+
+PrivateKey=./woah
+
+TEST1=$(md5sum $PrivateKey)
+TEST1=${TEST1:0:32}
+TEST2=$(sha1sum $PrivateKey)
+TEST2=${TEST2:0:40}
+ExpectPubKey=""$TEST1"l0l1m50rand0m"$TEST2""
+
 # In case anyone ends up playing with this before I have a chance to put more work into it
 # You have to put your pubkey in here as well at the moment, as comparison against privatekey hasnt been implemented yet
-# If you search the string 'insert-key-here' youll find it
+# If you search the string ExpectPubKey youll find it
 main() {
   ztcp -l 333
   fd=$REPLY
@@ -29,7 +39,7 @@ main() {
         echo "$(date +"%T")    client reported ip address $CLIENTIP" >> /root/testing/servroot/server.log
         echo "Checking authkey..." >& $clientfd
         read -t 600 line <& $clientfd
-        if [[ "$line" = 'insert-key-here' ]]; then
+        if [[ "$line" = "$ExpectPubKey" ]]; then
           SHPASS=1
           MDPASS=1
         fi
