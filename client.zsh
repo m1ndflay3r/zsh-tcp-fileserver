@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
-AuthKey="insert-key-here"
+AuthKey=$(cat /Path/To/Public/Key)
+
 TARGET="NULL"
 PORT="NULL"
 zmodload zsh/net/tcp
