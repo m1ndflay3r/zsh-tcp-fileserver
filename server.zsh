@@ -4,7 +4,7 @@ zmodload zsh/net/tcp
 
 AUTHORIZED="0"
 
-PrivateKey=/Path/To/Private/Key
+PrivateKey=/root/woah
 
 TEST1=$(md5sum $PrivateKey)
 TEST1=${TEST1:0:32}
@@ -51,11 +51,12 @@ main() {
           echo "$(tput setaf 1) identity key verification failure $(tput sgr 0)" >& $clientfd
           echo "$(date +"%T")    connection closed - bad pubkey" >> /root/testing/servroot/server.log
           line="close"
+        else
+          ISIPSEND="1"
+          AUTHORIZED="1"
+          echo "$(tput setaf 2) authorization successful$(tput sgr 0)" >& $clientfd
+          echo "$(date +"%T")    authentication successful" >> /root/testing/servroot/server.log
         fi
-        ISIPSEND="1"
-        AUTHORIZED="1"
-        echo "$(tput setaf 2) authorization successful$(tput sgr 0)" >& $clientfd
-        echo "$(date +"%T")    authentication successful" >> /root/testing/servroot/server.log
       else
         echo "$(date +"%T")    client tried to report ip address twice" >> /root/testing/servroot/server.log
         echo "$(tput setaf 1) trying to pull some tomfuckery are we?$(tput sgr 0)" >& $clientfd
