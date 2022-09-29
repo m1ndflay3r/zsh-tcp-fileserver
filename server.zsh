@@ -4,7 +4,7 @@ zmodload zsh/net/tcp
 
 AUTHORIZED="0"
 
-PrivateKey=/root/woah
+PrivateKey=/Path/To/Private/Key
 
 TEST1=$(md5sum $PrivateKey)
 TEST1=${TEST1:0:32}
