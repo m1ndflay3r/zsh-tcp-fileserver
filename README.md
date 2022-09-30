@@ -3,6 +3,9 @@ This is a fun little hobby project I've taken on to start some webdev (and to ge
 Feel free to use this however you want if you find it helpful 
 
 
+NOTE: This project depends on xxd (for both client and server operations) which is part of vim.
+
+
 basic use:
 
   Firstly, until I can be fucked to make this portable, all directories are hardcoded to /root/testing/servroot so thats where server has to reside unless you feel like changing the hardlinks.

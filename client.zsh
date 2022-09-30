@@ -16,8 +16,22 @@ hostfd=$REPLY
 read line <& $hostfd
 echo $line
 LOOPY="0"
-IPINFO="setip $(ip route get $TARGET)"
-IPINFO=$(echo $IPINFO | head -n 1)
+RESOLVED=$(ping $TARGET -c 1 | head -n 1)
+unset nRESOLVED
+nRESOLVED=" "
+while read -k1 -u0 character; do
+  i=${character/')'/BRACEDETECT}
+  if [[ "$i" != BRACEDETECT ]]; then
+    nRESOLVED=""$nRESOLVED""$i""
+  else
+    break
+  fi
+done < <(echo -n $RESOLVED)
+RESOLVED=$(echo ${nRESOLVED/*'('/ })
+IPINFO="setip $(ip route get $RESOLVED)"
+IPINFO=${IPINFO/*src/ }
+IPINFO=${IPINFO/uid*/ }
+IPINFO="setip "$IPINFO" "$USER"ISWEARIFSOMEONEACTUALLYHASTHISASTHEIRHOSTORUSER"$(hostname)""
 FIRSTRUN="1"
 while [ $LOOPY = 0 ]; do
   if [ $FIRSTRUN = "0" ]; then
@@ -25,24 +39,28 @@ while [ $LOOPY = 0 ]; do
     read mcfiley
     echo "Requesting $mcfiley from server..."
     echo $mcfiley >& $hostfd
-    if [[ $mcfiley = close ]]; then
+    if [[ $mcfiley = close ]] || [[ $line = bigrip ]]; then
       break
     fi
-    read line <& $hostfd
+    rm -rf /$(pwd)/MYAAH
+    while IFS= n=1 N=1 read line <& $hostfd; do
+      if [ "$(echo -n $line)" = xfercomp ]; then
+        break
+      fi
+      echo -n $line | xxd -r -p >>/$(pwd)/MYAAH
+    done
     if [ $line = bigrip ]; then
       echo "File $mcfiley does not exist on server!"
     elif [ $mcfiley = index ]; then
       echo " "
-      WRITE=${line//.PLACEYMCPLACEHOLD/'\n'}
       tput setaf 4
       tput bold
-      echo "$WRITE"
+      cat /$(pwd)/MYAAH
       tput sgr 0
     else
       unset SAVEDAT
       SAVEDAT=$mcfiley:t
-      WRITE=${line//.PLACEYMCPLACEHOLD/'\n'}
-      echo "$WRITE" > ./$SAVEDAT
+      mv /$(pwd)/MYAAH /$(pwd)/$SAVEDAT
       echo "Received data is stored at ./$SAVEDAT"
       echo -n 'View now without closing connection? Know what youre opening or you could mess your term (Y/n) '
       read VIEWER
@@ -50,7 +68,7 @@ while [ $LOOPY = 0 ]; do
         VIEWER=y
       fi
       if [ $VIEWER = y ] || [ $VIEWER = Y ]; then
-        cat ./$SAVEDAT
+        cat /$(pwd)/$SAVEDAT
       fi
     fi
   else
@@ -60,6 +78,10 @@ while [ $LOOPY = 0 ]; do
     echo $AuthKey >& $hostfd
     read line <& $hostfd
     echo $line
+    read line <& $hostfd
+    if [ "$line" = fail ]; then
+      break
+    fi
     FIRSTRUN="0"
   fi
 done
