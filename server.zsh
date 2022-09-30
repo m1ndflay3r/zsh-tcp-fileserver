@@ -100,6 +100,6 @@ main() {
   ztcp -c $fd
   ztcp -c $clientfd
   AUTHORIZED="0"
-  ExpectPubKey="$ExpectPubKey" main
+  ExpectPubKey="$ExpectPubKey" ExpectPubLen="$ExpectPubLen" main
 }
 main
