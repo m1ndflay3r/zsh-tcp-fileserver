@@ -64,7 +64,7 @@ main() {
         else
           ISIPSEND="1"
           AUTHORIZED="1"
-          echo "$(tput setaf 2) authorization successful$(tput sgr 0)" >& $clientfd
+          echo "$(tput setaf 2)Authentication successful$(tput sgr 0)" >& $clientfd
           echo "pass" >& $clientfd
           echo "$(date +"%T")    authentication successful" >> /root/testing/servroot/server.log
         fi
