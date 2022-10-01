@@ -78,6 +78,9 @@ main() {
     if [[ $line = "close" ]]; then
       break
     elif [ $AUTHORIZED = 1 ] && [ $ISIPSEND = 0 ]; then
+      if [ -z "$line" ]; then
+        line=index
+      fi
       REQUESTPATH=$line:h
       REQUESTFILE=$line:t
       REQUESTPATH=${REQUESTPATH//../.}
